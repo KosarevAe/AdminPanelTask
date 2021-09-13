@@ -1,0 +1,31 @@
+{
+  "name": "node-admin-panel",
+  "version": "1.0.0",
+  "description": "Admin Panel on NodeJS + MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KosarevAe/AdminPanelTask.git"
+  },
+  "keywords": [
+    "NodeJS"
+  ],
+  "author": "Me",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KosarevAe/AdminPanelTask/issues"
+  },
+  "homepage": "https://github.com/KosarevAe/AdminPanelTask#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.3",
+    "mongodb": "^4.1.1"
+  }
+}

@@ -1,0 +1,4 @@
+# There is no .env files should be pushed to git repository
+.env
+# Ignore node_modules entire directory to push
+node_modules/
