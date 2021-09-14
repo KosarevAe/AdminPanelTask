@@ -27,8 +27,6 @@ async function start() {
         const collection = dataBase.collection('Users');
         const count = await collection.countDocuments();
 
-        console.log(count);
-
         application.listen(PORT, () => console.log('> Server is up and running on port : ' + PORT));
     } catch (error) {
         console.log(error);
