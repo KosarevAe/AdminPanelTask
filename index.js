@@ -1,46 +1,40 @@
 'use strict'
 const express = require('express');
 const exphbs = require('express-handlebars');
-const {
-    MongoClient
-} = require('mongodb');
+const siteRoutes = require('./routes/adminPanel');
+const MongoClient = require("mongodb").MongoClient;
 
 const PORT = process.env.PORT || 5050;
+const url = 'mongodb+srv://mongodb:mongodb@cluster0.jab82.mongodb.net/AdminPanelDB?';
+const mongoClient = new MongoClient(url);
+
 const application = express();
 const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: 'hbs',
-})
+});
 
 application.engine('hbs', hbs.engine);
 application.set('view engine', 'hbs');
 application.set('views', 'views');
 
-async function main() {
-    const uri = "mongodb+srv://mongodb:<mongodb>@cluster0.jab82.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-    const client = new MongoClient(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
+application.use(siteRoutes);
 
+async function start() {
     try {
-        // Connect to the MongoDB cluster
-        await client.connect();
+        await mongoClient.connect();
+        const dataBase = mongoClient.db('AdminPanelDB');
+        const collection = dataBase.collection('Users');
+        const count = await collection.countDocuments();
 
-        // Make the appropriate DB calls
-        await listDatabases(client);
+        console.log(count);
 
+        application.listen(PORT, () => console.log('> Server is up and running on port : ' + PORT));
     } catch (error) {
-        console.error(error);
+        console.log(error);
     } finally {
-        await client.close();
+        await mongoClient.close();
     }
 }
-main().catch(console.error);
 
-async function listDatabases(client) {
-    databasesList = await client.db().admin().listDatabases();
-
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
+start();
